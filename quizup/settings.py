@@ -52,10 +52,12 @@ MIDDLEWARE_CLASSES = [
 
 ROOT_URLCONF = 'quizup.urls'
 
+TEMPLATES_PATH = '%s/templates' % BASE_DIR
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_PATH],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -100,6 +102,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+STATICS_PATH = '%s/static' % BASE_DIR
+
+
+STATICFILES_DIRS = [
+    STATICS_PATH
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
