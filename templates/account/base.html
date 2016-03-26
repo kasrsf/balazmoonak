@@ -17,8 +17,9 @@
             <strong>Menu:</strong>
             <ul>
       	{% if user.is_authenticated %}
+          <li> {{request.user.is_superuser}} </li>
           {% if request.user.is_superuser %}
-            <li><a href="{% url 'admin:index' %}"> Admin Page</a></li>
+            <li><a href="{% url 'admin' %}"> Admin Page</a></li>
           {% endif %}
         	<li><a href="{% url 'account_email' %}">Change E-mail</a></li>
         	<li><a href="{% url 'account_logout' %}">Sign Out</a></li>

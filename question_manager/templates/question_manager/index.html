@@ -1,0 +1,48 @@
+
+<html>
+<head>
+	Hello this is an angular form
+</head>
+<body ng-app>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js">
+	</script>
+	{% if request.user.is_superuser %}
+		I am super user
+	{% endif %}
+	<div ng-controller="myCtrl">
+		<div ng-repeat="item in categories"> 
+			{% verbatim %}
+				{{item.name}}
+			{% endverbatim %}
+		</div>
+		<form ng-submit="sendPost()">
+			<input ng-model="newName"/>
+			<button type="submit">Send</button>
+		</form>
+			
+	</div>
+	<script>
+	function myCtrl($scope, $http) {
+	    $scope.hello = {name: "Boaz"};
+	    $scope.newName = "";
+		$scope.categories = $http.get("/dev/category?format=json").then(function(response){
+				console.log(response)
+				return response.data
+			})
+	    $scope.sendPost = function() {
+			$http.defaults.headers.post['X-CSRFToken'] = '{{ csrf_token }}' ;
+
+	    	var res = $http.post("/dev/category", 
+	    		{'name': $scope.newName, 'csrfmiddlewaretoken': '{{ csrf_token }}'});
+			$scope.categories = $http.get("/dev/category?format=json").then(function(response){
+				console.log(response)
+				return response.data
+			})
+
+			
+			return "";
+	    }                   
+	}
+	</script>
+</body>
+</html>

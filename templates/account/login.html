@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+<html>
+{% load staticfiles %}
+	<head> 
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js">
+		</script>
+<!--		<script src = "{% static "javascripts/registration/main.js" %} " > </script> -->
+	</head>
+	<body ng-app>
+    	<!-- <p ng-controller="TextController">{% verbatim %} {{SomeText}} {% endverbatim%}</p> -->
+		{% block content %}
+		<form action="{% url 'login' %}" method="post" accept-charset="utf-8">
+			{% csrf_token %}
+			{% for field in form %}
+				<label>{{ field.label }}</label>
+				{% if field.errors %}
+					{{ field.errors }}
+				{% endif %}
+				{{ field }}
+			{% endfor %}
+			<input type="hidden" name="next" value="{{ next }}" />
+			<input class="button small" type="submit" value="Submit"/>
+		</form>
+		{% endblock %}
+
+	</body>
+</html>
