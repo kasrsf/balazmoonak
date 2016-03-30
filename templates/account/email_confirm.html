@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load account %}
+{% block content %}
+<div class="container">
+            <h1>تایید حساب</h1>
+
+        {% if confirmation %}
+                <p>لطفا تایید کنید که ایمیل <a href="mailto:{{ confirmation.email_address.email }}">{{ confirmation.email_address.email }}</a> معتبر است.</p>
+
+
+<form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+{% csrf_token %}
+    <button type="submit">تایید</button>
+</form>
+
+{% else %}
+
+{% url 'account_email' as email_url %}
+
+<p>This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new e-mail confirmation request</a></p>
+
+{% endif %}
+
+</div>
+{% endblock %}

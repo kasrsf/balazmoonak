@@ -1,37 +1,39 @@
+
+{% load staticfiles %}
+
 <html>
 <head>
-</head>
-<body>
-    {% if messages %}
-    <div>
-      <strong>Messages:</strong>
-      <ul>
-      	{% for message in messages %}
-      	<li>{{message}}</li>
-      	{% endfor %}
-            </ul>
-          </div>
-          {% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.2.0-rc2/css/bootstrap-rtl.css">
 
-          <div>
-            <strong>Menu:</strong>
-            <ul>
-      	{% if user.is_authenticated %}
-          {% if request.user.is_superuser %}
-            <li><a href="{% url 'admin:index' %}"> Admin Page</a></li>
-          {% endif %}
-        	<li><a href="{% url 'account_email' %}">Change E-mail</a></li>
-        	<li><a href="{% url 'account_logout' %}">Sign Out</a></li>
-      	{% else %}
-        	<li><a href="{% url 'account_login' %}">Sign In</a></li>
-        	<li><a href="{% url 'account_signup' %}">Sign Up</a></li>
-      	{% endif %}
-      </ul>
-    </div>
-    {% block content %}
-    {% endblock %}
-    {% block extra_body %}
-    {% endblock %}
+    <link rel="stylesheet" href= "{% static 'css/main.css' %}">
+</head>
+
+<body ng-app>
+    <nav class="navbar navbar-default " role="navigation">
+       <div class="container">
+           <ul class="nav navbar-nav">
+             <li><a href="/"><span class="glyphicon glyphicon-home"></span> خانه</a></li>
+                </ul>
+               <p class="nav navbar-nav navbar-left">
+                   {% if user.is_authenticated %}
+                   <a class="btn btn-primary navbar-btn" href="{% url 'account_logout' %}" id="logout">
+                       خروج
+                   </a>
+                   {% else %}
+                   <a class="btn btn-success navbar-btn" href="{% url 'account_signup' %}" id="register">
+                        ثبت نام
+                   </a>
+                   <a class="btn btn-default navbar-btn" href="{% url 'account_login' %}" id="login">
+                        ورود
+                   </a>
+                   {% endif %}
+               </p>
+       </div>
+     </nav>
+     {% block content %}{% endblock %}
 </body>
 
 </html>

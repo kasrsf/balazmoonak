@@ -1,28 +1,29 @@
 {% extends 'base.html' %}
 
-<html>
-{% load staticfiles %}
-	<head> 
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js">
-		</script>
-<!--		<script src = "{% static "javascripts/registration/main.js" %} " > </script> -->
-	</head>
-	<body ng-app>
-    	<!-- <p ng-controller="TextController">{% verbatim %} {{SomeText}} {% endverbatim%}</p> -->
-		{% block content %}
-		<form action="{% url 'login' %}" method="post" accept-charset="utf-8">
-			{% csrf_token %}
-			{% for field in form %}
-				<label>{{ field.label }}</label>
-				{% if field.errors %}
-					{{ field.errors }}
-				{% endif %}
-				{{ field }}
-			{% endfor %}
-			<input type="hidden" name="next" value="{{ next }}" />
-			<input class="button small" type="submit" value="Submit"/>
-		</form>
-		{% endblock %}
-
-	</body>
-</html>
+{% block content %}
+<div class="row">
+	<div class="col-md-4 col-md-offset-4">
+		<div class="well">
+			<form action="{% url 'login' %}" method="post" accept-charset="utf-8">
+				{% csrf_token %}
+				{{ form.non_field_errors }}
+				{% for field in form %}
+					<div class="form-group">
+					  {% if not field.is_hidden %}
+						  <label for={{ field.id_for_label }}>{{ field.label }}</label>
+					  {% endif %}
+					  {{ field }}
+					  {% if field.errors %}
+						  {{ field.errors }}
+					  {% endif %}
+				  	</div>
+				{% endfor %}
+				<input type="hidden" name="next" value="{{ next }}" />
+                <div class="form-group">
+  			  	    <button type="submit" class="btn btn-primary">ورود</button>
+  			    </div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

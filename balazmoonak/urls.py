@@ -20,16 +20,17 @@ from django.contrib.auth.views import login
 from django.contrib.auth.views import logout
 from question_manager import views as qm_views
 urlpatterns = [
-	
-   
+
+
     ##Repair view
 	# url(
-	#     regex=r'^dev/$', 
+	#     regex=r'^dev/$',
 	# 	view=login,
-	# 	kwargs={'template_name': 'homepage.html'}, 
+	# 	kwargs={'template_name': 'homepage.html'},
 	# 	name='homepage'
 	# 	),
 	url(r'^dev/', include('question_manager.urls')),
 	url(r'^admin/', admin.site.urls),
 	url(r'^accounts/', include('balazmoonak.account_urls')),
+    url('^.*$', qm_views.IndexView.as_view(), name='index')
 ]

@@ -5,21 +5,21 @@ from allauth.account import views as auth_views
 # from authentication import views as custom_views
 urlpatterns = [
     url(
-        regex=r'^login/$', 
-        view=auth_views.login, 
-        kwargs={'template_name': 'account/login.html'}, 
+        regex=r'^login/$',
+        view=auth_views.login,
+        kwargs={'template_name': 'account/login.html'},
         name='login'
         ),
     url(
-        regex=r'^logout/$', 
-        view=auth_views.logout, 
-        kwargs={'template_name': 'account/logout.html'}, 
+        regex=r'^logout/$',
+        view=auth_views.logout,
+        kwargs={'template_name': 'account/logout.html'},
         name='logout'
         ),
     # url(
-    #     regex=r'^signup/$', 
-    #     view = custom_views.SignupView, 
-    #     kwargs={'template_name': 'account/signup.html'}, 
+    #     regex=r'^signup/$',
+    #     view = custom_views.SignupView,
+    #     kwargs={'template_name': 'account/signup.html'},
     #     name='account_signup'
     #     ),
     url(r'^', include('allauth.urls')),

@@ -11,15 +11,16 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587 
+EMAIL_PORT = 587
 EMAIL_HOST_USER = 'balazmoonak@gmail.com'
 EMAIL_HOST_PASSWORD = 'balazmoonak123'
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER 
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 # The URL to redirect to after a successful e-mail confirmation, in case no
 # user is logged in. Default value is settings.LOGIN_URL.
 # ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL
-ACCOUNT_SIGNUP_FORM_CLASS = 'authentication.forms.SignupForm'
+#ACCOUNT_SIGNUP_FORM_CLASS = 'authentication.forms.SignupForm'
 #ACCOUNT_ADAPTER = 'authentication.custom_auth.AccountAdapter'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/dev'
 LOGIN_REDIRECT_URL = '/dev'
@@ -32,7 +33,7 @@ LOGIN_REDIRECT_URL = '/dev'
 # ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
 
 # The user is required to hand over an e-mail address when signing up.
-ACCOUNT_EMAIL_REQUIRED = True 
+ACCOUNT_EMAIL_REQUIRED = True
 
 # Determines the e-mail verification method during signup. When set to
 # "mandatory" the user is blocked from logging in until the email
