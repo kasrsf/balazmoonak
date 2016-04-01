@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django import forms
 from .models import Account
 from allauth.account.forms import LoginForm
@@ -39,6 +40,7 @@ class SignupForm(forms.Form):
         user.last_name = self.cleaned_data['last_name']
         user.country = self.cleaned_data['country']
         user.gender = self.cleaned_data['gender']
+        user.groups.add(Group.objects.get(name='Question_Managers'))
         user.save()
 
 

@@ -29,8 +29,8 @@ urlpatterns = [
 	# 	kwargs={'template_name': 'homepage.html'},
 	# 	name='homepage'
 	# 	),
+    url(r'^admin/', admin.site.urls),
 	url(r'^dev/', include('question_manager.urls')),
-	url(r'^admin/', admin.site.urls),
 	url(r'^accounts/', include('balazmoonak.account_urls')),
     url('^.*$', qm_views.IndexView.as_view(), name='index')
 ]

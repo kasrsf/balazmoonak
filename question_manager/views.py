@@ -12,9 +12,10 @@ from django.views.generic.base import TemplateView
 
 class IndexView(generic.ListView):
     template_name = 'homepage.html'
+    context_object_name = 'question_list'
+
     def get_queryset(self):
-        """Return the last five published questions."""
-        return Category.objects.all()
+        return Question.objects.all()
 
 # @login_required (login_url='/accounts/login')
 # def index(request):
@@ -30,9 +31,8 @@ class CategoryList(generics.ListCreateAPIView):
 #		permissions.AllowAny
 #	]
 	def get_queryset(self):
-		return Category.objects.all() 
+		return Category.objects.all()
 
 class CategoryDetail(generics.RetrieveAPIView):
-	model = Category
-	serializer_class = CategorySerializer
-# Create your views here.
+    model = Category
+    serializer_class = CategorySerializer
