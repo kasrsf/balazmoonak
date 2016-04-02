@@ -1,3 +1,5 @@
+# -*- coding: utf-8
+
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, Group
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
@@ -13,7 +15,6 @@ class AccountManager(BaseUserManager):
             country = country
         )
 
-        account.groups.add(Group.objects.get(name='Question_Managers'))
         account.set_password(password)
         account.save()
 
