@@ -1,0 +1,239 @@
+[
+  {
+    "model": "question_manager.Category",
+    "pk": 1,
+    "fields": {
+      "name": "general"
+    }
+  },
+  {
+    "model": "question_manager.Category",
+    "pk": 2,
+    "fields": {
+      "name": "football"
+    }
+  },
+  {
+    "model": "question_manager.Category",
+    "pk": 3,
+    "fields": {
+      "name": "music"
+    }
+  },
+  {
+    "model": "question_manager.Question",
+    "pk": 1,
+    "fields": {
+      "category": 1,
+      "question_text": "hi?",
+      "right_answer": "hi",
+      "choice2": "goodbye",
+      "choice3": "how are you",
+      "choice4": "why?"
+    }
+  },
+  {
+    "model": "question_manager.Question",
+    "pk": 2,
+    "fields": {
+      "category": 1,
+      "question_text": "Which country's flag has the most stars?",
+      "right_answer": "United States",
+      "choice2": "Brazil",
+      "choice3": "Iran",
+      "choice4": "New Zealand"
+    }
+  },
+  {
+    "model": "question_manager.Question",
+    "pk": 3,
+    "fields": {
+      "category": 1,
+      "question_text": "Which one is not a Shakespearean play?",
+      "right_answer": "Mona Lisa",
+      "choice2": "Hamlet",
+      "choice3": "King Lear",
+      "choice4": "Macbeth"
+    }
+  },
+  {
+    "model": "question_manager.Question",
+    "pk": 4,
+    "fields": {
+      "category": 1,
+      "question_text": "Which gas do we breath out?",
+      "right_answer": "Carbon dioxide",
+      "choice2": "Methane",
+      "choice3": "Oxygen",
+      "choice4": "Helium"
+    }
+  },
+  {
+    "model": "question_manager.Question",
+    "pk": 5,
+    "fields": {
+      "category": 1,
+      "question_text": "What is the name of the current president of Iran?",
+      "right_answer": "Hassan Rouhani",
+      "choice2": "Mahmoud Ahmadinejad",
+      "choice3": "Mohammad Khatami",
+      "choice4": "Agha Kasra"
+    }
+  },
+  {
+    "model": "question_manager.Question",
+    "pk": 6,
+    "fields": {
+      "category": 1,
+      "question_text": "Which group is the best SELab group?",
+      "right_answer": "balazmoonak",
+      "choice2": "quizup",
+      "choice3": "quizdown",
+      "choice4": "quizleft"
+    }
+  },
+  {
+    "model": "question_manager.Question",
+    "pk": 7,
+    "fields": {
+      "category": 2,
+      "question_text": "Which one is the best Asian international soccer team?",
+      "right_answer": "Iran",
+      "choice2": "Japan",
+      "choice3": "Australia",
+      "choice4": "South Korea"
+    }
+  },
+  {
+    "model": "question_manager.Question",
+    "pk": 8,
+    "fields": {
+      "category": 2,
+      "question_text": "Which one is the best Premier League Football club?",
+      "right_answer": "Arsenal",
+      "choice2": "Man Utd",
+      "choice3": "Liverpool",
+      "choice4": "Man City"
+    }
+  },
+  {
+    "model": "question_manager.Question",
+    "pk": 9,
+    "fields": {
+      "category": 2,
+      "question_text": "Which country won 2014 FIFA World Cup?",
+      "right_answer": "Germany",
+      "choice2": "Iran",
+      "choice3": "Brazil",
+      "choice4": "Argentina"
+    }
+  },
+  {
+    "model": "question_manager.Question",
+    "pk": 10,
+    "fields": {
+      "category": 2,
+      "question_text": "Best Spanish team?",
+      "right_answer": "Barcelona",
+      "choice2": "Real Madrid",
+      "choice3": "Atlético Madrid",
+      "choice4": "Celta"
+    }
+  },
+  {
+    "model": "question_manager.Question",
+    "pk": 11,
+    "fields": {
+      "category": 2,
+      "question_text": "Captain of Iran football team?",
+      "right_answer": "Andranik",
+      "choice2": "Sardar",
+      "choice3": "Ashkan",
+      "choice4": "Khosro"
+    }
+  },
+  {
+    "model": "question_manager.Question",
+    "pk": 12,
+    "fields": {
+      "category": 2,
+      "question_text": "How many players on a football team?",
+      "right_answer": "11",
+      "choice2": "10",
+      "choice3": "2",
+      "choice4": "22"
+    }
+  },
+  {
+    "model": "question_manager.Question",
+    "pk": 13,
+    "fields": {
+      "category": 3,
+      "question_text": "Which won is not a music genre?",
+      "right_answer": "Agha kasra",
+      "choice2": "Pop",
+      "choice3": "Jazz",
+      "choice4": "Rock"
+    }
+  },
+  {
+    "model": "question_manager.Question",
+    "pk": 14,
+    "fields": {
+      "category": 3,
+      "question_text": "Which won is not a music instrument?",
+      "right_answer": "6 Tar",
+      "choice2": "Piano",
+      "choice3": "Guitar",
+      "choice4": "Drums"
+    }
+  },
+  {
+    "model": "question_manager.Question",
+    "pk": 15,
+    "fields": {
+      "category": 3,
+      "question_text": "Best Persian traditional singer?",
+      "right_answer": "Shajarian",
+      "choice2": "Yeganeh!",
+      "choice3": "Hichkas!!",
+      "choice4": "Pashaei!!!"
+    }
+  },
+  {
+    "model": "question_manager.Question",
+    "pk": 16,
+    "fields": {
+      "category": 3,
+      "question_text": "Who sang Kojaie?",
+      "right_answer": "Mohsen Chavoshi",
+      "choice2": "Ehsan Khajehamiri",
+      "choice3": "Reza Yazdani",
+      "choice4": "Shahram Shokoohi"
+    }
+  },
+  {
+    "model": "question_manager.Question",
+    "pk": 17,
+    "fields": {
+      "category": 3,
+      "question_text": "Swift?",
+      "right_answer": "Taylor",
+      "choice2": "Haa",
+      "choice3": "Hoo",
+      "choice4": "Hee"
+    }
+  },
+  {
+    "model": "question_manager.Question",
+    "pk": 18,
+    "fields": {
+      "category": 3,
+      "question_text": "Best music?",
+      "right_answer": "This",
+      "choice2": "That",
+      "choice3": "In",
+      "choice4": "Oon"
+    }
+  }
+]
