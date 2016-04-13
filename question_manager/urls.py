@@ -1,14 +1,21 @@
 from django.conf.urls import url, include
 from .serializers import CategorySerializer
-from .views import CategoryList, CategoryDetail
+from django.contrib.auth.decorators import login_required
+from .views import IndexView, QuizCategorySelectView, LeaderboardCategorySelectView, QuizView, LeaderboardView
 from . import views
 
-category_url = [
-	url(r'^$', CategoryList.as_view(), name='category-list'),
-	url(r'^(?P<pk>[0-9a-zA-Z_-]+)$', CategoryDetail.as_view(), name='category-detail'),
+single_player_quiz_urls = [
+    url(r'^(?P<category_id>[0-9]+)/$', login_required(QuizView.as_view()), name='quiz-view'),
+	url(r'^$', login_required(QuizCategorySelectView.as_view()), name='category-list'),
+]
+
+leaderboard_urls = [
+    url(r'^$', login_required(LeaderboardCategorySelectView.as_view()), name='category-list'),
+    url(r'^(?P<category_id>[0-9]+)/$', login_required(LeaderboardView.as_view()), name='leaderboard-view'),
 ]
 
 urlpatterns = [
-	url(r'^$', views.IndexView.as_view(), name = 'index'),
-	url(r'^category', include(category_url)),
+	url(r'^spquiz/', include(single_player_quiz_urls)),
+    url(r'^leaderboard/', include(leaderboard_urls)),
+    url(r'^$', IndexView.as_view(), name = 'index'),
 ]

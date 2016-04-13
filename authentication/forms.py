@@ -57,4 +57,4 @@ class LoginForm(LoginForm):
         self.fields['password'].widget = forms.PasswordInput(attrs={'class': 'form-control'})
         self.fields['password'].error_messages = farsi_errors;
 
-        self.fields['captcha'] = ReCaptchaField(label='', attrs={'class': 'form-control'})
+        self.fields['captcha'] = ReCaptchaField(label='')

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6 col-xs-offset-3">
+            <div class="list-group">
+                <h4 class="text-center"><strong>انتخاب موضوع</strong></h4>
+                {% for category in category_list %}
+                        <a href="{{category.id}}" class="list-group-item">{{ category.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

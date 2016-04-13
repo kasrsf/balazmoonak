@@ -17,7 +17,15 @@
        <div class="container">
            <ul class="nav navbar-nav">
              <li><a href="/"><span class="glyphicon glyphicon-home"></span> خانه</a></li>
-                </ul>
+             <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">بازی <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                      <li><a href="/spquiz/">بازی تک‌نفره</a></li>
+                      <li><a href="#">بازی دو‌نفره</a></li>
+                  </ul>
+              </li>
+             <li><a href="/leaderboard">جدول امتیازات</a>
+            </ul>
                <p class="nav navbar-nav navbar-left">
                    {% if user.is_authenticated %}
                    <a class="btn btn-default navbar-btn" href="/admin/" id="logout">
@@ -38,6 +46,8 @@
        </div>
      </nav>
      {% block content %}{% endblock %}
+     <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+     <script type=text/javascript src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>
 
 </html>
