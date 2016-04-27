@@ -1,27 +1,65 @@
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js" >
+</script>
+<script src="/static/question_manager/question.js" >
+</script>
 {% extends 'base.html' %}
 
 {% block content %}
     {% if questions %}
-    <div class="container">
-        <div class="list-group col-xs-6 col-xs-offset-3">
-                {% for question in questions %}
-                    <div class="list-group-item">
-                        <h4><strong>سوال: </strong>{{ question.question_text }}</h4>
-                        <ul class="list-group" id="shuffle">
-                            <li class="list-group-item active">{{ question.right_answer }}</li>
-                            <li class="list-group-item">{{ question.choice2 }}</li>
-                            <li class="list-group-item">{{ question.choice3 }}</li>
-                            <li class="list-group-item">{{ question.choice4 }}</li>
-                        </ul>
-                    </div>
-                {% endfor %}
-        </div>
-    </div>
-    {% else %}
-        <div class="container">
-            <div class="well col-xs-6 col-xs-offset-3">
-                <h4>سوالی نیست</h4>
+    <div ng-app="singlePlayerQuiz" class="container-fluid">
+        <div class="container" ng-controller="QuestionController ">
+            {% verbatim %}
+            <div class="text-center" ng-hide="inProgress">
+                <button class="btn btn-info" ng-click="start()">START</button>
             </div>
+            <div class="list-group-item col-xs-6 col-xs-offset-3" ng-show="inProgress">
+                    <h4><strong>سوال: </strong>{{ question.question_text }}</h4>
+                    <ul class="list-group" ng-repeat = 'choice in question.choices'>
+                        <button class="btn btn-primary col-lg-12" ng-click="checkAnswer(choice.id)"> {{choice.text}} </button>
+                    </ul>
+            </div>
+            <div class="container text-center" ng-show="finish" >
+                Your Final Score is: {{ score }}
+            </div>
+            {%  endverbatim %}
         </div>
-    {% endif %}
+        {% else %}
+            <div class="container text-center">
+                <div class="well col-xs-6 col-xs-offset-3">
+                    <h4>سوالی نیست</h4>
+                </div>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}
+{#{% if questions %}#}
+{#<div class="container" >#}
+{#    <div class="list-group col-xs-6 col-xs-offset-3">#}
+        {#                {% for question in questions %}#}
+        {#                    <div class="list-group-item">#}
+        {#                        <h4><strong>سوال: </strong>{{ question.question_text }}</h4>#}
+        {#                        <ul class="list-group" id="shuffle">#}
+        {#                            <li class="list-group-item active">{{ question.right_answer }}</li>#}
+        {#                            <li class="list-group-item">{{ question.choice2 }}</li>#}
+        {#                            <li class="list-group-item">{{ question.choice3 }}</li>#}
+        {#                            <li class="list-group-item">{{ question.choice4 }}</li>#}
+        {#                        </ul>#}
+        {#                    </div>#}
+        {#                {% endfor %}#}
+{#        <div ng-app="QuestionApp" ng-controller="QuestionController">#}
+{#            {% verbatim %}#}
+{#            <div ng-show="!inProgress">#}
+{#                <button ng-click="start()">START</button>#}
+{#            </div>#}
+{#            <form  ng-show="inProgress" class="list-group-item">#}
+{#                <h4><strong> {{ question.text }}</strong> </h4>#}
+{#                <div ng-repeat = 'choice in question.Choices'>#}
+{#                    <button class="button-form" ng-click="checkAnwer(choice.id)"> {{choice.text}} </button>#}
+{#                </div>#}
+{#                <p> {{score}} </p>#}
+{#            </form>#}
+{#            <div ng-show="finish">#}
+{#                <p> Your final score is {{score}}. </p>#}
+{#            </div>#}
+{#        </div>#}
+{#        {% endverbatim %}#}
