@@ -7,8 +7,8 @@ from django.contrib.auth.decorators import login_required
 from rest_framework import generics, permissions
 from django.views import generic
 from itertools import chain
-
-
+from django.http import JsonResponse
+from django.core import serializers
 from django.views.generic.base import TemplateView
 
 class IndexView(generic.ListView):
@@ -33,6 +33,7 @@ class LeaderboardCategorySelectView(generic.ListView):
         return Category.objects.all()
 
 
+
 class QuizView(generic.ListView):
     template_name = 'quiz.html'
     context_object_name = 'questions'
@@ -53,3 +54,10 @@ class LeaderboardView(generic.ListView):
             q1 = Category.objects.filter(id= category_id)
             q2 = Score.objects.filter(category_id=category_id).order_by('-score')
         return list(chain(q1, q2))
+
+def questions(request, category_id):
+    obj = Question.objects.all()
+    serialized_questions = serializers.serialize('json', obj)
+    return HttpResponse(serialized_questions, content_type="application/json")
+
+
