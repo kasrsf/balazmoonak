@@ -1,13 +1,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js" >
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js">
+</script>
 <script src="/static/question_manager/question.js" >
 </script>
 {% extends 'base.html' %}
 
 {% block content %}
+
     {% if questions %}
     <div ng-app="singlePlayerQuiz" class="container-fluid">
-        <div class="container" ng-controller="QuestionController ">
+        <div class="container" ng-controller="QuestionController" >
             {% verbatim %}
             <div class="text-center" ng-hide="inProgress">
                 <button class="btn btn-info" ng-click="start()">START</button>
@@ -18,6 +21,8 @@
                         <button class="btn btn-primary col-lg-12" ng-click="checkAnswer(choice.id)"> {{choice.text}} </button>
                     </ul>
             </div>
+            {%  endverbatim %}
+            {% verbatim %}
             <div class="container text-center" ng-show="finish" >
                 Your Final Score is: {{ score }}
             </div>

@@ -10,6 +10,7 @@ from itertools import chain
 from django.http import JsonResponse
 from django.core import serializers
 from django.views.generic.base import TemplateView
+from django.views.decorators.csrf import csrf_exempt
 
 class IndexView(generic.ListView):
     template_name = 'homepage.html'
@@ -39,6 +40,7 @@ class QuizView(generic.ListView):
     context_object_name = 'questions'
 
     def get_queryset(self):
+        current_user = self.request.user
         return Question.objects.filter(category_id= self.kwargs.get('category_id', None)).order_by('?')[:3]
 
 class LeaderboardView(generic.ListView):
@@ -59,5 +61,11 @@ def questions(request, category_id):
     obj = Question.objects.all()
     serialized_questions = serializers.serialize('json', obj)
     return HttpResponse(serialized_questions, content_type="application/json")
-
+@csrf_exempt
+def post(request):
+    print request.POST
+    t = Score(user = request.user.id, score = request.body.score)
+    t.save()
+    print request.user.id
+    print request.body
 
