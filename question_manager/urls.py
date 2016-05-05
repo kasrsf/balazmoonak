@@ -7,7 +7,6 @@ from . import views
 single_player_quiz_urls = [
     url(r'^(?P<category_id>[0-9]+)/$', login_required(QuizView.as_view()), name='quiz-view'),
     url(r'^(?P<category_id>[0-9]+)/questions.json', views.questions, name='questions'),
-    url(r'^result', views.post, name="result"),
 	url(r'^$', login_required(QuizCategorySelectView.as_view()), name='category-list'),
 ]
 

@@ -1,23 +1,118 @@
-//var questionModule = angular.module('QuestionApp', []);
-//questionModule.factory('Questions', function($http) {
-//    var q = this;
-//    $http.get("./questions.json").success(function (response){
-//        q.questions = response.data;
-//    });
-//
-//    return {
-//        get_by_id: function(id){
-//            if(id < q.questions.length){
-//                q.questions[id].Choices.shuffle();
-//                return q.questions[id];
-//
-//            }
-//            else{
-//                return false;
-//            }
-//        }
-//    };
-//});
+(function(){
+    var app = angular.module('singlePlayerQuiz',[]);
+    app.config(function($httpProvider) {
+        $httpProvider.defaults.xsrfCookieName = 'csrftoken'
+        $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken'
+        $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+    });
+
+    app.controller('QuestionController', function($scope, $http, $timeout, $interval){
+        var intervalPromise;
+        $scope.pause = false;
+        $scope.inProgress = false;
+        $scope.progressValue = 100;
+        $scope.questions = [];
+        $http.get("./questions.json").success(function(response){
+            $scope.questions = response;
+        });
+
+        $scope.reset = function() {
+            $scope.inProgress = false;
+            $scope.progressValue = 100;
+            $scope.score = 0;
+            $scope.finish = false;
+        };
+
+        $scope.reset();
+        $scope.start = function(){
+            $scope.inProgress = true;
+            $scope.id = 0;
+            $scope.score = 0;
+            $scope.questions = $scope.questions//.slice(1,5);
+            $scope.question = $scope.questions[$scope.id].fields || false//Questions.get_by_id(this.id);
+            $scope.question.choices = [ {"id":1, "text": $scope.question.right_answer} , {"id":2, "text" : $scope.question.choice2}, {"id":3, "text": $scope.question.choice3},
+                {"id":4, "text": $scope.question.choice4}];
+            $scope.category = $scope.question.category
+            $scope.question.choices.shuffle();
+            intervalPromise = $interval(function(){
+                $scope.progressValue -= 1;
+                if ($scope.progressValue == 0) {
+                    $scope.showRightAnswer();
+                    $timeout(function() {
+                        $scope.nextQuestion();
+                    }, 1000);
+                }
+            }, 100, 100);
+        };
+        $scope.showRightAnswer = function() {
+            var correct_elt = document.getElementById("1")
+            correct_elt.style.color = "white";
+            correct_elt.style.backgroundColor = "green";
+        }
+        $scope.showWrongAnswer = function(answer) {
+            var wrong_elt = document.getElementById(answer)
+            wrong_elt.style.color = "white";
+            wrong_elt.style.backgroundColor = "red";
+        }
+        $scope.checkAnswer = function(answer){
+            if ($scope.pause == false) {
+                $scope.pause = true;
+                $interval.cancel(intervalPromise);
+                $scope.showRightAnswer();
+                if(answer === 1){//$scope.questions[$scope.id].fields.right_answer){//Questions.get_by_id($scope.id).answer){
+                    $scope.score++;
+                } else {
+                    $scope.showWrongAnswer(answer);
+                }
+                $timeout(function() {
+                    $scope.nextQuestion();
+                }, 1000);
+            }
+        };
+        $scope.nextQuestion = function(){
+            $scope.pause = false;
+            $scope.progressValue = 100;
+            $scope.id++;
+            $scope.question = ($scope.questions[$scope.id] && $scope.questions[$scope.id].fields) || false//Questions.get_by_id($scope.id);
+            $scope.question.choices = [ {"id":1, "text": $scope.question.right_answer} , {"id":2, "text" : $scope.question.choice2}, {"id":3, "text": $scope.question.choice3},
+                {"id":4, "text": $scope.question.choice4}];
+
+            if($scope.question === false){
+                $scope.inProgress = false;
+                $scope.finish = true;
+
+                var data = $.param({
+                               id: $scope.user_id,
+                               score: $scope.score,
+                               category_id: $scope.category
+                           });
+
+                var targetURL = "/leaderboard/" + $scope.category + "/";
+                $http.post(targetURL, data)
+                /*$http({
+                    url: targetURL,
+                    data: data,
+                    method: 'POST',
+                });*/
+            }
+            $scope.question.choices.shuffle();
+
+            $timeout(function() {
+                intervalPromise = $interval(function(){
+                $scope.progressValue -= 1;
+                if ($scope.progressValue == 0) {
+                    $scope.showRightAnswer();
+                    $timeout(function() {
+                        $scope.nextQuestion();
+                    }, 1000);
+                }
+            }, 100, 100)
+            }, 500);
+
+        };
+    });
+})();
+
 Array.prototype.shuffle = function() {
     var input = this;
 
@@ -31,90 +126,3 @@ Array.prototype.shuffle = function() {
     }
     return input;
 };
-
-(function(){
-    var app = angular.module('singlePlayerQuiz',[]);
-    app.controller('QuestionController', function($scope, $http){
-        $scope.questions = []
-        $http.get("./questions.json").success(function(response){
-            $scope.questions = response;
-        });
-        $scope.reset = function() {
-            $scope.inProgress = false;
-            $scope.score = 0;
-            $scope.finish = false;
-        };
-        $scope.reset();
-        $scope.start = function(){
-            $scope.inProgress = true;
-            $scope.id = 0;
-            $scope.score = 0;
-            $scope.questions.shuffle();
-            $scope.questions = $scope.questions.slice(1,5);
-            $scope.question = $scope.questions[$scope.id].fields || false//Questions.get_by_id(this.id);
-            $scope.question.choices = [ {"id":1, "text": $scope.question.right_answer} , {"id":2, "text" : $scope.question.choice1}, {"id":3, "text": $scope.question.choice2},
-                {"id":4, "text": $scope.question.choice3}];
-            console.log($scope.question.choices);
-            $scope.question.choices.shuffle();
-
-        };
-        $scope.checkAnswer = function(answer){
-            if(answer === 1 ){//$scope.questions[$scope.id].fields.right_answer){//Questions.get_by_id($scope.id).answer){
-                $scope.score++;
-            }
-            $scope.nextQuestion();
-        };
-        $scope.nextQuestion = function(){
-            $scope.id++;
-            $scope.question = ($scope.questions[$scope.id] && $scope.questions[$scope.id].fields) || false//Questions.get_by_id($scope.id);
-            $scope.question.choices = [ {"id":1, "text": $scope.question.right_answer} , {"id":2, "text" : $scope.question.choice1}, {"id":3, "text": $scope.question.choice2},
-                {"id":4, "text": $scope.question.choice3}];
-            console.log($scope.question);
-            if($scope.question === false){
-                $scope.inProgress = false;
-                $scope.finish = true;
-            }
-        };
-    });
-})();
-
-
-//
-//function QuestionController($http, $scope){
-//    var q = this;
-//    q.questions = [];
-//    $http.get("./questions.json").success(function (response){
-//        q.questions = response;
-//        console.log(q.questions);
-//    });
-//    $scope.reset = function() {
-//        $scope.inProgress = false;
-//        $scope.score = 0;
-//    };
-//    $scope.reset();
-//    $scope.start = function(){
-//        $scope.inProgress = true;
-//        $scope.id = 0;
-//        $scope.score = 0;
-//        $scope.question = this.questions[$scope.id]//Questions.get_by_id($scope.id);
-//        console.log($scope.question)
-//
-//    };
-//    $scope.checkAnwer = function(answer){
-//        if(answer === questions[$scope.id].answer){//Questions.get_by_id($scope.id).answer){
-//            $scope.score++;
-//        }
-//        $scope.nextQuestion();
-//        console.log($scope.id);
-//    };
-//    $scope.nextQuestion = function(){
-//        $scope.id++;
-//        $scope.question = questions[$scope.id]//Questions.get_by_id($scope.id);
-//
-//
-//        if($scope.question === false){
-//            $scope.inProgress = false;
-//            $scope.finish = true;
-//        }
-//    };
-//}

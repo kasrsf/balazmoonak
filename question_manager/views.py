@@ -11,6 +11,7 @@ from django.http import JsonResponse
 from django.core import serializers
 from django.views.generic.base import TemplateView
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 class IndexView(generic.ListView):
     template_name = 'homepage.html'
@@ -33,15 +34,11 @@ class LeaderboardCategorySelectView(generic.ListView):
     def get_queryset(self):
         return Category.objects.all()
 
-
-
 class QuizView(generic.ListView):
     template_name = 'quiz.html'
-    context_object_name = 'questions'
 
     def get_queryset(self):
-        current_user = self.request.user
-        return Question.objects.filter(category_id= self.kwargs.get('category_id', None)).order_by('?')[:3]
+        return []
 
 class LeaderboardView(generic.ListView):
     template_name = 'leaderboard.html'
@@ -50,22 +47,21 @@ class LeaderboardView(generic.ListView):
     def get_queryset(self):
         category_id = self.kwargs.get('category_id', None)
         if category_id == '0':
-            q1 = []
-            q2 = Score.objects.order_by('-score')
+            q = Score.objects.order_by('-score')
         else:
-            q1 = Category.objects.filter(id= category_id)
-            q2 = Score.objects.filter(category_id=category_id).order_by('-score')
-        return list(chain(q1, q2))
+            q = Score.objects.filter(category_id=category_id).order_by('-score')
+        return q
+
+    def post(self, request, *args, **kwargs):
+        score = request.POST.get('score')
+        user_id = request.POST.get('id')
+        category_id = request.POST.get('category_id')
+
+        s = Score(user_id=user_id, score=score, category_id=category_id)
+        s.save()
+        return HttpResponse('')
 
 def questions(request, category_id):
-    obj = Question.objects.all()
+    obj = Question.objects.filter(category_id= category_id).order_by('?')[:3]
     serialized_questions = serializers.serialize('json', obj)
     return HttpResponse(serialized_questions, content_type="application/json")
-@csrf_exempt
-def post(request):
-    print request.POST
-    t = Score(user = request.user.id, score = request.body.score)
-    t.save()
-    print request.user.id
-    print request.body
-

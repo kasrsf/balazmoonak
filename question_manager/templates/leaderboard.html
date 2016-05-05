@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="panel panel-primary col-xs-6 col-xs-offset-3">
-        <div class="panel-heading"><h4 class="text-center"><strong>{{ ranking.0 }}<strong></h4></div>
+        <div class="panel-heading"><h4 class="text-center"><strong><strong></h4></div>
         <table class="table">
             <thead>
                 <tr>
@@ -14,17 +14,15 @@
                 </tr>
             </thead>
             <tbody>
-                {% if 'ranking' %}
-                    {% for score in ranking.1 %}
-                        <tr>
-                            <td>{{ forloop.counter }}</td>
-                            <td>{{ score.user.email }}</td>
-                            <td>{{ score.score }}</td>
-                        </tr>
-                    {% endfor %}
-                {% else %}
-                    <p class="text-center">امتیازی ثبت نشده</p>
-                {% endif %}
+
+                {% for score in ranking %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ score.user }}</td>
+                        <td>{{ score.score }}</td>
+                    </tr>
+                {% endfor %}
+
             </tbody>
         </table>
     </div>

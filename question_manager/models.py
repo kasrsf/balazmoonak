@@ -46,7 +46,7 @@ class Score(models.Model):
         verbose_name_plural = "امتیازها"
 
     def __unicode__(self):
-    	return self.score
+    	return str(self.score)
 
     def __str__(self):
-        return self.score
+        return str(self.score)
