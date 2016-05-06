@@ -63,7 +63,7 @@ ROOT_URLCONF = 'balazmoonak.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,9 +78,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'balazmoonak.wsgi.application'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-	)
+#STATICFILES_DIRS = (
+#    os.path.join(BASE_DIR, 'static'),
+#	)
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
@@ -142,7 +142,6 @@ AUTHENTICATION_BACKENDS = (
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-
 STATIC_URL = '/static/'
 #ACCOUNT_EMAIL_REQUIRED (=False)
 SITE_ID = 1
@@ -263,4 +262,7 @@ RECAPTCHA_PRIVATE_KEY = '6LfTDRwTAAAAAAJuHvRRxYWP72boKpIiKnUunyEy'
 
 RECAPTCHA_USE_SSL = True
 
-#STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+
+#STATIC_ROOT = os.path.join(BASE_DIR, "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+
