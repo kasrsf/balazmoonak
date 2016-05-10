@@ -10,7 +10,6 @@
             </div>
             <div class="list-group-item col-xs-6 col-xs-offset-3 question" ng-show="inProgress">
                     <h4><strong>سوال: </strong>{{ question.question_text }}</h4>
-                    {{question.category.name}}
                     <ul class="list-group" ng-repeat = 'choice in question.choices'>
                         <a class="text-center list-group-item" ng-click="checkAnswer(choice.id)" id={{choice.id}}> {{choice.text}} </a>
                     </ul>

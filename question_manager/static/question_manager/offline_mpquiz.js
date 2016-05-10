@@ -12,7 +12,7 @@
         $scope.inProgress = false;
         $scope.progressValue = 100;
         $scope.questions = [];
-        $http.get("./questions.json").success(function(response){
+        $http.get("../questions.json").success(function(response){
             $scope.questions = response;
         });
 
@@ -28,8 +28,9 @@
             $scope.inProgress = true;
             $scope.id = 0;
             $scope.score = 0;
-            //$scope.questions = $scope.questions//.slice(1,5);
+            $scope.questions = $scope.questions//.slice(1,5);
             $scope.question = $scope.questions[$scope.id].fields || false//Questions.get_by_id(this.id);
+
             $scope.question.choices = [ {"id":1, "text": $scope.question.right_answer} , {"id":2, "text" : $scope.question.choice2}, {"id":3, "text": $scope.question.choice3},
                 {"id":4, "text": $scope.question.choice4}];
             $scope.category = $scope.question.category
@@ -82,8 +83,14 @@
                 $scope.finish = true;
 
                 var data = $.param({
-                               type: "sp",
+                               type: "mp",
                                id: $scope.user_id,
+                               requested: $scope.requested_user_id,
+                               q1: $scope.questions[0].pk,
+                               q2: $scope.questions[1].pk,
+                               q3: $scope.questions[2].pk,
+                               q4: $scope.questions[3].pk,
+                               q5: $scope.questions[4].pk,
                                score: $scope.score,
                                category_id: $scope.category
                            });

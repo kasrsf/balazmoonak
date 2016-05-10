@@ -50,3 +50,21 @@ class Score(models.Model):
 
     def __str__(self):
         return str(self.score)
+
+class Match(models.Model):
+    category = models.ForeignKey(Category)
+    starter_user = models.ForeignKey(Account, related_name='starter_user')
+    requested_user = models.ForeignKey(Account, null=True, related_name='requested_user')
+    starter_score = models.ForeignKey(Score, null=True, related_name='starter_score')
+    requested_score = models.ForeignKey(Score, null=True, related_name='requested_score')
+    q1 = models.ForeignKey(Question, related_name='q1')
+    q2 = models.ForeignKey(Question, related_name='q2')
+    q3 = models.ForeignKey(Question, related_name='q3')
+    q4 = models.ForeignKey(Question, related_name='q4')
+    q5 = models.ForeignKey(Question, related_name='q5')
+
+    def __unicode__(self):
+    	return str(self.category)
+
+    def __str__(self):
+        return str(self.category)

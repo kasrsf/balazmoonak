@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div ng-app="singlePlayerQuiz" ng-init="user_id={{ user.id }}; opp_score={{opponent_score.starter_score.score}}; match_id={{opponent_score.id}}" class="container-fluid">
+        <div class="row" ng-controller="QuestionController">
+            {% verbatim %}
+            <div class="text-center" ng-hide="inProgress || finish">
+                <button class="btn btn-info" ng-click="start()">شروع کوییز</button>
+            </div>
+            <div class="list-group-item col-xs-6 col-xs-offset-3 question" ng-show="inProgress">
+                    <h4><strong>سوال: </strong>{{ question.question_text }}</h4>
+                    <ul class="list-group" ng-repeat = 'choice in question.choices'>
+                        <a class="text-center list-group-item" ng-click="checkAnswer(choice.id)" id={{choice.id}}> {{choice.text}} </a>
+                    </ul>
+                    <div class="progress progress-striped ">
+                        <div class="progress-bar progress-bar-success" role="progressbar" style="width: {{progressValue}}%;">
+                        </div>
+                    </div>
+            </div>
+
+            <div class="text-center col-xs-1" ng-show="inProgress">
+                امتیاز: {{ score }} <br>
+                امتیاز حریف: {{ opp_score }}
+            </div>
+
+            <div class="panel panel-success col-xs-6 col-xs-offset-3" ng-show="finish">
+              <div class="panel-heading"><h4>پایان کوییز</h4></div>
+              <div class="panel-body">
+                <h5>امتیاز نهایی:  ‌{{score}}</h5>
+                <h5>امتیاز رقیب: {{opp_score}}</h5>
+              </div>
+            </div>
+
+            {%  endverbatim %}
+        </div>
+        <br>
+        <div class="row">
+
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js" >
+    </script>
+    <script src="/static/question_manager/offline_mpquiz_reply.js" >
+    </script>
+{% endblock %}
