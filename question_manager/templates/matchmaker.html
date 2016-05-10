@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div ng-app="MatchMaker" ng-init="user_id={{ user.id }}; category_id={{ category_id }}; counter=1;" class="container-fluid">
+        <div class="row" ng-controller="MatchController">
+            <div class="text-center"><h3>منتظر باشید<span ng-show="counter>2">.</span><span ng-show="counter>1">.</span>.</h3></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js" >
+    </script>
+    <script src="/static/question_manager/matchmaker.js" >
+    </script>
+{% endblock %}

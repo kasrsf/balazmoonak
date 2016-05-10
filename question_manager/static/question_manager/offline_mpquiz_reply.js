@@ -28,8 +28,9 @@
             $scope.inProgress = true;
             $scope.id = 0;
             $scope.score = 0;
-            //$scope.questions = $scope.questions//.slice(1,5);
+            $scope.questions = $scope.questions//.slice(1,5);
             $scope.question = $scope.questions[$scope.id].fields || false//Questions.get_by_id(this.id);
+
             $scope.question.choices = [ {"id":1, "text": $scope.question.right_answer} , {"id":2, "text" : $scope.question.choice2}, {"id":3, "text": $scope.question.choice3},
                 {"id":4, "text": $scope.question.choice4}];
             $scope.category = $scope.question.category
@@ -82,19 +83,15 @@
                 $scope.finish = true;
 
                 var data = $.param({
-                               type: "sp",
+                               type: "mpr",
                                id: $scope.user_id,
                                score: $scope.score,
-                               category_id: $scope.category
+                               category_id: $scope.category,
+                               match_id: $scope.match_id
                            });
 
                 var targetURL = "/leaderboard/" + $scope.category + "/";
-                $http.post(targetURL, data)
-                /*$http({
-                    url: targetURL,
-                    data: data,
-                    method: 'POST',
-                });*/
+                $http.post(targetURL, data);
             }
             $scope.question.choices.shuffle();
 

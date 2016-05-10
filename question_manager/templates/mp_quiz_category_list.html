@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% if awaiting_matches %}
+        <div class="col-xs-6">
+            <div class="panel panel-default">
+                <div class="panel-body" style="background-color: #dadada">
+                    <div class="list-group">
+                        <h4 class="text-center"><strong>انتخاب موضوع</strong></h4>
+                        {% for category in category_list %}
+                                <a href="{{category.id}}" class="list-group-item">{{ category.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="panel panel-default">
+                <div class="panel-body" style="background-color: #dadada">
+                    <div class="list-group">
+                        <h4 class="text-center"><strong>رقابت‌ها</strong></h4>
+                        {% for match in awaiting_matches %}
+                            <a href="../matches/{{ match.id }}" class="list-group-item">
+                                {{ match.starter_user.first_name }} {{ match.starter_user.last_name}}
+                                <div class="text-left"><strong>موضوع: </strong> {{match.category.name}}</div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% else %}
+        <div class="col-xs-6 col-xs-offset-3">
+            <div class="list-group">
+                <h4 class="text-center"><strong>انتخاب موضوع</strong></h4>
+                {% for category in category_list %}
+                        <a href="{{category.id}}" class="list-group-item">{{ category.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

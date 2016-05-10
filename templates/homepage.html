@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
 <div class="container">
     <div class="jumbotron">
         <div class="row">
@@ -13,8 +14,8 @@
                 <a class="btn btn-warning btn-lg" href="/spquiz/">
                     <span class="glyphicon glyphicon-play"></span>بازی تک‌نفره
                 </a>
-                <a class="btn btn-danger btn-lg" href="/#">
-                    <span class="glyphicon glyphicon-forward"></span>  بازی دو‌نفره
+                <a class="btn btn-danger btn-lg" href="/mpquiz/">
+                    <span class="glyphicon glyphicon-forward"></span>  بازی دو‌نفره <span class="badge"> {{awaiting_matches}} </span>
                 </a>
                 <a class="btn btn-info btn-lg" href="/leaderboard">
                     <span class="glyphicon glyphicon-stats"></span>  جدول امتیازات
