@@ -12,6 +12,23 @@ farsi_errors = {
 'invalid': 'مقدار وارد شده معتبر نیست'
 }
 
+COUNTRIES = (
+            ("IR", "ایران"),
+            ("US", "آمریکا"),
+            ("UK", "انگلیس"),
+            ("AF", "افغانستان"),
+            ("AR", "آرژانتین"),
+            ("AU", "استرالیا"),
+            ("BH", "بحرین"),
+            ("BE", "بلژیک"),
+            ("BR", "برزیل"),
+            ("CA", "کانادا"),
+            ("CN", "چین"),
+            ("FR", "فرانسه"),
+            ("IQ", "عراق"),
+            ("JP", "ژاپن"),
+            ("UK", "انگلیس"),
+            )
 
 class SignupForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -31,7 +48,6 @@ class SignupForm(forms.Form):
     first_name = forms.CharField(label = "نام", widget=forms.TextInput(attrs={'class': 'form-control'}), error_messages=farsi_errors)
     last_name = forms.CharField(label = "نام خانوادگی", widget=forms.TextInput(attrs={'class': 'form-control'}), error_messages=farsi_errors)
 
-    COUNTRIES = (("IR", "ایران"), ("US", "آمریکا"))
     country = forms.ChoiceField(choices=COUNTRIES, label = "کشور", widget=forms.Select(attrs={'class': 'form-control'}), error_messages = farsi_errors)
 
     GENDERS = (("M", "مرد"), ("F", "زن"))

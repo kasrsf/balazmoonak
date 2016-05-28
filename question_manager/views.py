@@ -1,3 +1,5 @@
+# -*- coding: utf-8
+
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from .models import *
@@ -12,6 +14,7 @@ from django.http import JsonResponse
 from django.core import serializers
 from django.views.generic.base import TemplateView
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Sum
 import json
 
 class IndexView(generic.ListView):
@@ -84,9 +87,9 @@ class LeaderboardView(generic.ListView):
     def get_queryset(self):
         category_id = self.kwargs.get('category_id', None)
         if category_id == '0':
-            q = Score.objects.order_by('-score')
+            q = Score.objects.values('user__email').annotate(total_score=Sum('score')).order_by('-total_score')
         else:
-            q = Score.objects.filter(category_id=category_id).order_by('-score')
+            q = Score.objects.filter(category_id=category_id).values('user__email').annotate(total_score=Sum('score')).order_by('-total_score')
         return q
 
     def get_context_data(self, **kwargs):

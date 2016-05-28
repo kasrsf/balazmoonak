@@ -18,8 +18,8 @@
                 {% for score in ranking %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td>{{ score.user }}</td>
-                        <td>{{ score.score }}</td>
+                        <td>{{ score.user__email }}</td>
+                        <td>{{ score.total_score }}</td>
                     </tr>
                 {% endfor %}
 

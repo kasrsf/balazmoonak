@@ -62,6 +62,9 @@ class Match(models.Model):
     q3 = models.ForeignKey(Question, related_name='q3')
     q4 = models.ForeignKey(Question, related_name='q4')
     q5 = models.ForeignKey(Question, related_name='q5')
+    class Meta:
+        verbose_name = "مسابقه"
+        verbose_name_plural = "مسابقه‌ها"
 
     def __unicode__(self):
     	return str(self.category)

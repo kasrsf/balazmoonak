@@ -44,7 +44,8 @@ INSTALLED_APPS = [
 	'allauth.account',
 	'allauth.socialaccount',
 	'authentication',
-    'captcha'
+    'captcha',
+    'django_countries',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -262,7 +263,8 @@ RECAPTCHA_PRIVATE_KEY = '6LfTDRwTAAAAAAJuHvRRxYWP72boKpIiKnUunyEy'
 
 RECAPTCHA_USE_SSL = True
 
-
-#STATIC_ROOT = os.path.join(BASE_DIR, "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
+COUNTRIES_OVERRIDE = {
+    'IR': 'ایران'
+}
