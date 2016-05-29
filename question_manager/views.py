@@ -79,7 +79,13 @@ class OfflineMultiplayerQuizView(generic.ListView):
     def get_queryset(self):
         return []
 
+class AddQuestionView(generic.ListView):
+    template_name = 'add_questions.html'
+    context_object_name = 'category_list'
 
+    def get_queryset(self):
+        return Category.objects.all()
+    
 class LeaderboardView(generic.ListView):
     template_name = 'leaderboard.html'
     context_object_name = 'ranking'

@@ -4,6 +4,11 @@ from django.contrib.auth.decorators import login_required
 from .views import *
 from . import views
 
+add_questions_urls = [
+    url(r'^$', login_required(AddQuestionView.as_view()), name='add_question'),
+    url(r'^$', login_required(QuizCategorySelectView.as_view()), name='category-list'),
+]
+
 single_player_quiz_urls = [
     url(r'^(?P<category_id>[0-9]+)/$', login_required(QuizView.as_view()), name='quiz-view'),
     url(r'^(?P<category_id>[0-9]+)/questions.json', views.questions, name='questions'),
@@ -38,7 +43,8 @@ leaderboard_urls = [
 ]
 
 urlpatterns = [
-	url(r'^spquiz/', include(single_player_quiz_urls)),
+	url(r'^addquestions/', include(add_questions_urls)),
+    url(r'^spquiz/', include(single_player_quiz_urls)),
     url(r'^mpquiz/', include(multi_player_quiz_urls)),
     url(r'^leaderboard/', include(leaderboard_urls)),
     url(r'^matches/', include(offline_match_urls)),
