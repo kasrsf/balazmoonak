@@ -4,7 +4,8 @@ from __future__ import unicode_literals
 
 from django.db import models
 from authentication.models import Account
-
+from enum import Enum
+from django.core.validators import MinValueValidator
 class Category(models.Model):
     name = models.CharField(max_length=20, verbose_name="نام")
 
@@ -62,6 +63,9 @@ class Match(models.Model):
     q3 = models.ForeignKey(Question, related_name='q3')
     q4 = models.ForeignKey(Question, related_name='q4')
     q5 = models.ForeignKey(Question, related_name='q5')
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
     class Meta:
         verbose_name = "مسابقه"
         verbose_name_plural = "مسابقه‌ها"
@@ -71,3 +75,46 @@ class Match(models.Model):
 
     def __str__(self):
         return str(self.category)
+
+
+class Achievement(models.Model):
+    POINT = HOUR = 0
+    CONSECUTIVE_WINS = DAY = 1
+    MATCHS = WEEK = 2
+    WINS = 3
+    ACHIEVEMENT_TYPE = (
+        (POINT, 'امتیاز'),
+        (CONSECUTIVE_WINS, 'برد متوالی'),
+        (MATCHS, 'بازی'),
+        (WINS, 'برد'),
+    )
+    TIME_UNIT = (
+        (HOUR, 'ساعت'),
+        (DAY, 'روز'),
+        (WEEK, 'هفته'),
+    )
+    type = models.IntegerField(choices = ACHIEVEMENT_TYPE, verbose_name="نوع دستاورد")
+    amount = models.PositiveIntegerField(verbose_name = "میزان")
+    time = models.IntegerField(default = 0, verbose_name= "بازه‌ی زمانی")
+    time_unit = models.IntegerField(choices = TIME_UNIT, verbose_name = "نوع زمان")
+
+    class Meta:
+        verbose_name = "دستاورد"
+        verbose_name_plural = "دستاوردها"
+
+    def __unicode__(self):
+    	return str(self.amount)
+
+    def __str__(self):
+        return str(self.amount)
+
+class AchievementUser(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    achievement = models.ForeignKey(Achievement, on_delete = models.CASCADE)
+
+    def __unicode__(self):
+    	return str(self.achievement)
+
+    def __str__(self):
+        return str(self.achievement)
