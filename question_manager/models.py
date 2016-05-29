@@ -91,7 +91,6 @@ class Achievement(models.Model):
     TIME_UNIT = (
         (HOUR, 'ساعت'),
         (DAY, 'روز'),
-        (WEEK, 'هفته'),
     )
     type = models.IntegerField(choices = ACHIEVEMENT_TYPE, verbose_name="نوع دستاورد")
     amount = models.PositiveIntegerField(verbose_name = "میزان")
