@@ -6,6 +6,10 @@
         $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
     });
     app.controller('QuestionAdd', function($scope, $http){
+      $http.get('/category/').success(function(response){
+        $scope.categories = response;
+        console.log(response);
+      });
       $scope.save = function(){
         var data = $.param({
                       question_text : $scope.question.text,
@@ -19,6 +23,18 @@
         var targetURL = "/question/";
         $http.post(targetURL, data);
       };
+      $scope.addCategory = function(){
+        var data = $.param({
+          name: $scope.category.name,
+        });
+        var targetURL = "/category/";
+        $http.post(targetURL, data).success(function(){
+          $scope.category.name = "";
+          $http.get('/category/').success(function(response){
+            $scope.categories = response;
+          });
+        });
+      }
     });
     app.controller('QuestionController', function($scope, $http, $timeout, $interval){
         var intervalPromise;

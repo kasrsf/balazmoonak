@@ -332,4 +332,17 @@ def question_add(request):
             category_id = request.POST.get('category')
         )
         q.save()
-        return HttpResponse('ok')
+        serialized_question = serializers.serialize('json', [q]);
+        return HttpResponse(serialized_question, content_type="application/json")
+
+def category(request):
+    if request.method == "POST":
+        q = Category(
+            name = request.POST.get('name'),
+        )
+        q.save()
+        return HttpResponse('Created')
+    else:
+        all = Category.objects.all()
+        serialized_categories = serializers.serialize('json', all)
+        return HttpResponse(serialized_categories, content_type="application/json")

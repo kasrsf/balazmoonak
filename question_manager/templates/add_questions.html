@@ -2,27 +2,35 @@
 
 {% block content %}
 <div class="container" ng-app="singlePlayerQuiz" ng-controller="QuestionAdd">
-    <form>
+    <form class="form-horizontal" role="form">
         <div class="form-group"><h4 class ="text-center col-xs-6 col-xs-offset-3"><strong>دسته‌بندی سؤالات جدید</strong></h4></div>
-        <div class="form-group"><input type = "text" placeholder="دسته‌بندی جدید" class="form-control text-center col-xs-6 col-xs-offset-3"></div>
-        <div class="dropdown col-xs-6 col-xs-offset-3" >
+        <div class="form-group">
+          <input ng-model="category.name" type = "text" placeholder="دسته‌بندی جدید" class="form-control col-lg-3" style="margin-right:25%">
+          <button ng-click="addCategory()" class=" form-control btn btn-default col-lg-3">Add Category</button>
+        </div>
+        <div class="form-group">
+
+        </div>
+        <!-- <div class="dropdown col-xs-6 col-xs-offset-3" >
             <button href = "#" class="btn btn-info text-center col-xs-6 col-xs-offset-3" type="button" data-toggle="dropdown"> دسته‌بندی‌های موجود<span class="caret"></span></button>
             <div class="dropdown-menu" >
                 {% for category in category_list %}
                         <a href="#" class="list-group-item">{{ category.name }}</a>
                 {% endfor %}
             </div>
-        </div>
+        </div> -->
 
-        <div class = "row">
+        <!-- <div class = "row">
             <div class="col-xs-6 col-xs-offset-3">
                 <div class="list-group">
                     <h4 class="text-center"><strong>لیست سؤالات</strong></h4>
                         <a href="#" class="list-group-item"></a>
                 </div>
             </div>
+        </div> -->
+        <div class="form-group">
+          <button type="button" class="btn btn-info text-center col-xs-6 col-xs-offset-3" data-toggle="modal" data-target="#add_question_modal">اضافه‌کردن سؤال جدید</button>
         </div>
-        <button type="button" class="btn btn-info text-center col-xs-6 col-xs-offset-3" data-toggle="modal" data-target="#add_question_modal">اضافه‌کردن سؤال جدید</button>
         <div id = "add_question_modal" class = "modal fade" role="form">
             <div class="modal-form col-xs-6 col-xs-offset-3">
                 <div class="modal-content">
@@ -32,13 +40,25 @@
                     </div>
                     {% verbatim %}
                     <div class="modal-body">
-                        <div><input ng-model="quesion.txt" type = "text" placeholder="صورت سؤال" class="form-control text-center"></div>
-                        <div><input ng-model="question.right_answer" type = "text" placeholder="پاسخ صحیح" class="form-control text-center"></div>
-                        <div><input ng-model="question.choice2" type = "text" placeholder="پاسخ غلط" class="form-control text-center"></div>
-                        <div><input ng-model="question.choice3" type = "text" placeholder="پاسخ غلط" class="form-control text-center"></div>
-                        <div><input ng-model="question.choice4" type = "text" placeholder="پاسخ غلط" class="form-control text-center"></div>
-                        <div><input ng-model="question.category" type = "text" placeholder="آی‌دی کتگوری" class="form-control text-center"></div>
-
+                        <form class="form-horizontal">
+                        <div class="form-group"><input ng-model="quesion.txt" type = "text" placeholder="صورت سؤال" class="form-control text-center"></div>
+                        <div class="form-group"><input ng-model="question.right_answer" type = "text" placeholder="پاسخ صحیح" class="form-control text-center"></div>
+                        <div class="form-group"><input ng-model="question.choice2" type = "text" placeholder="پاسخ غلط" class="form-control text-center"></div>
+                        <div class="form-group"><input ng-model="question.choice3" type = "text" placeholder="پاسخ غلط" class="form-control text-center"></div>
+                        <div class="form-group"><input ng-model="question.choice4" type = "text" placeholder="پاسخ غلط" class="form-control text-center"></div>
+                        <div class="form-group"><input ng-show="false" ng-model="question.category" type = "text" placeholder="آی‌دی کتگوری" class="form-control text-center"></div>
+                        <!-- <div class="dropdown col-xs-6 col-xs-offset-3" >
+                            <button href = "#" class="btn btn-info text-center col-xs-6 col-xs-offset-3" type="button" data-toggle="dropdown"> دسته‌بندی‌های موجود<span class="caret"></span></button>
+                            <div class="dropdown-menu" > -->
+                                <!-- <div> -->
+                        <div class="form-group">
+                          <select ng-model="question.category" class="form-control">
+                            <option  ng-repeat="category in categories" class="list-group-item" value="{{category.pk}}">{{ category.fields["name"] }}</option>
+                          </select>
+                        </div>
+                            <!-- </div>
+                        </div> -->
+                      </form>
                     </div>
                     {% endverbatim %}
                     <div class="modal-footer">
