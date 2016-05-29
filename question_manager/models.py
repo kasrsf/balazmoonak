@@ -96,17 +96,17 @@ class Achievement(models.Model):
     type = models.IntegerField(choices = ACHIEVEMENT_TYPE, verbose_name="نوع دستاورد")
     amount = models.PositiveIntegerField(verbose_name = "میزان")
     time = models.IntegerField(default = 0, verbose_name= "بازه‌ی زمانی")
-    time_unit = models.IntegerField(choices = TIME_UNIT, verbose_name = "نوع زمان")
+    time_unit = models.IntegerField(default = 0, choices = TIME_UNIT, verbose_name = "نوع زمان")
 
     class Meta:
         verbose_name = "دستاورد"
         verbose_name_plural = "دستاوردها"
 
     def __unicode__(self):
-    	return str(self.amount)
+    	return str(str(self.type) + " " + str(self.amount))
 
     def __str__(self):
-        return str(self.amount)
+        return str(str(self.type) + " " + str(self.amount))
 
 class AchievementUser(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)

@@ -15,6 +15,7 @@ from django.core import serializers
 from django.views.generic.base import TemplateView
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Sum
+from django.db.models import Q
 import json
 
 class IndexView(generic.ListView):
@@ -85,7 +86,62 @@ class AddQuestionView(generic.ListView):
 
     def get_queryset(self):
         return Category.objects.all()
-    
+def is_achievement_unlocked(user_id, achievement_id):
+    return AchievementUser.objects.filter(user_id = user_id, achievement_id= achievement_id).count() > 0
+def get_last_consecutive_wins(user_id):
+    matches = Match.objects.all().filter(Q(starter_user_id = user_id) | Q(requested_user_id = user_id)).order_by('-created_at')
+    count  = 0
+    for match in matches:
+        if match.starter_user.id == user_id and match.starter_score.score > match.requested_score.score:
+            count = count + 1
+        elif match.requested_user.id == user_id and match.starter_score.score < match.requested_score.score:
+            count = count + 1
+        else:
+            break
+    return count
+def get_wins(user_id):
+    matches = Match.objects.all().filter(Q(starter_user__id = user_id) | Q(requested_user__id = user_id)).order_by('-created_at')
+    count  = 0
+    for match in matches:
+        if match.starter_user.id == user_id and match.starter_score.score > match.requested_score.score:
+            count = count + 1
+        elif match.requested_user.id == user_id and match.starter_score.score < match.requested_score.score:
+            count = count + 1
+    return count
+
+
+def check_achievment(user_id):
+    print 'checking achievments'
+    achievments = Achievement.objects.all()
+    for a in achievments:
+        if (not is_achievement_unlocked(user_id, a.id)):
+            if a.type == 0:
+                print "Checking Type: Points"
+                scores = Score.objects.filter(user_id=user_id)
+                total_score = sum (s.score for s in scores)
+                if total_score > a.amount:
+                    new_achive = AchievementUser(user_id=user_id, achievement_id=a.id)
+                    new_achive.save()
+            elif a.type == 1:
+                print "Checking Type: Consecutive wins"
+                if get_last_consecutive_wins(user_id) >= a.amount:
+                    new_achive = AchievementUser(user_id=user_id, achievement_id=a.id)
+                    new_achive.save()
+            elif a.type == 2:
+                print "Checking Type: Matches"
+                matches_played_as_starter = Match.objects.all().filter(starter_user_id = user_id).count()
+                matches_played_as_requested = Match.objects.all().filter(requested_user_id =user_id).count()
+                total_matches = matches_played_as_starter + matches_played_as_requested
+                if total_matches >= a.amount:
+                    new_achive = AchievementUser(user_id=user_id, achievement_id=a.id)
+                    new_achive.save()
+            elif a.type == 3:
+                print "Checking Type: Wins"
+                if get_wins(user_id) >= a.amount:
+                    new_achive = AchievementUser(user_id=user_id, achievement_id=a.id)
+                    new_achive.save()
+
+
 class LeaderboardView(generic.ListView):
     template_name = 'leaderboard.html'
     context_object_name = 'ranking'
@@ -113,9 +169,18 @@ class LeaderboardView(generic.ListView):
         score = request.POST.get('score')
         user_id = request.POST.get('id')
         category_id = request.POST.get('category_id')
+        scores = Score.objects.filter(user_id = user_id, category_id = category_id)
 
-        s = Score(user_id=user_id, score=score, category_id=category_id)
-        s.save()
+        if scores.count() == 0:
+            s = Score(user_id=user_id, score=score, category_id=category_id)
+            s.save()
+        else:
+            s = scores[0]
+            print s
+            s.score += int(score)
+            print s
+            s.save()
+
 
         if qtype == "mp":
              requested_user = request.POST.get('requested')
@@ -142,6 +207,7 @@ class LeaderboardView(generic.ListView):
             elif (starter_id[0]['requested_user_id'] == user_id):
                 Match.objects.filter(id=match_id).update(requested_score_id=s.id)
 
+        check_achievment(user_id)
         return HttpResponse('')
 
 def questions(request, category_id):
@@ -236,3 +302,16 @@ class OnlineMatchView(generic.ListView):
 
     def get_queryset(self):
         return []
+
+def question_add(request):
+    if request.method == "POST":
+        q = Question(
+            question_text = request.POST.get('question_text'),
+            right_answer = request.POST.get('right_answer'),
+            choice2 = request.POST.get('choice2'),
+            choice3 = request.POST.get('choice3'),
+            choice4 = request.POST.get('choice4'),
+            category_id = request.POST.get('category')
+        )
+        q.save()
+        return HttpResponse('ok')

@@ -50,4 +50,5 @@ urlpatterns = [
     url(r'^matches/', include(offline_match_urls)),
     url(r'^omatches/', include(online_match_urls)),
     url(r'^$', IndexView.as_view(), name = 'index'),
+    url(r'^question/', views.question_add),
 ]

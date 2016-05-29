@@ -5,7 +5,21 @@
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken'
         $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
     });
+    app.controller('QuestionAdd', function($scope, $http){
+      $scope.save = function(){
+        var data = $.param({
+                      question_text : $scope.question.text,
+                      right_answer : $scope.question.right_answer,
+                      choice4 : $scope.question.choice4,
+                      choice2 : $scope.question.choice2,
+                      choice3 : $scope.question.choice3,
+                      category : $scope.question.category,
+                   });
 
+        var targetURL = "/question/";
+        $http.post(targetURL, data);
+      };
+    });
     app.controller('QuestionController', function($scope, $http, $timeout, $interval){
         var intervalPromise;
         $scope.pause = false;
