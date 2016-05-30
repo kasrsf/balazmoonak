@@ -127,7 +127,7 @@ def get_last_consecutive_wins(user_id, time, time_unit):
             break
     return count
 
-def get_wins(user_id):
+def get_wins(user_id, time, time_unit):
     matches = Match.objects.all().filter(Q(starter_user__id = user_id) | Q(requested_user__id = user_id)).order_by('-created_at')
     count  = 0
     for match in matches:
@@ -139,7 +139,7 @@ def get_wins(user_id):
     return count
 
 
-def check_achievment(user_id, time, time_unit):
+def check_achievment(user_id):
     print 'checking achievments'
     achievments = Achievement.objects.all()
     for a in achievments:
@@ -149,14 +149,14 @@ def check_achievment(user_id, time, time_unit):
                 scores = Score.objects.filter(user_id=user_id)
                 total_score = 0
                 for s in scores:
-                    if time == 0 or (time > 0 and is_in_period(s.created_at, time, time_unit)):
+                    if a.time == 0 or (a.time > 0 and is_in_period(s.created_at, a.time, a.time_unit)):
                         total_score += s.score
                 if total_score > a.amount:
                     new_achive = AchievementUser(user_id=user_id, achievement_id=a.id)
                     new_achive.save()
             elif a.type == 1:
                 print "Checking Type: Consecutive wins"
-                if get_last_consecutive_wins(user_id, time, time_unit) >= a.amount:
+                if get_last_consecutive_wins(user_id, a.time, a.time_unit) >= a.amount:
                     new_achive = AchievementUser(user_id=user_id, achievement_id=a.id)
                     new_achive.save()
             elif a.type == 2:
@@ -169,7 +169,7 @@ def check_achievment(user_id, time, time_unit):
                     new_achive.save()
             elif a.type == 3:
                 print "Checking Type: Wins"
-                if get_wins(user_id) >= a.amount:
+                if get_wins(user_id, a.time, a.time_unit) >= a.amount:
                     new_achive = AchievementUser(user_id=user_id, achievement_id=a.id)
                     new_achive.save()
 
