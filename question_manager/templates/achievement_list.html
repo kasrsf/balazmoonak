@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6 col-xs-offset-3">
+            <div class="list-group">
+                <h4 class="text-center"><strong>دستاوردها</strong></h4>
+                {% for ach in achievement_list %}
+                        <a href="{{ach.id}}" class="list-group-item">
+                          {{ ach.amount }}
+                          {% if ach.type == 0 %}
+                          امتیاز
+                          {% elif ach.type == 1%}
+                          برد متوالی
+                          {% elif ach.type == 2 %}
+                          بازی
+                          {% elif ach.type == 3 %}
+                          برد
+                          {% endif %}
+                          {% if ach.time != 0 %}
+                            در
+                            {{ach.time}}
+                            {% if ach.time_unit == 0 %}
+                              ساعت
+                            {% elif ach.time_unit == 1 %}
+                              روز
+                            {% endif %}
+                          {% endif %}
+                        </a>
+                {% endfor %}
+                    <a href="0" class="list-group-item text-center active"><strong>همه</strong></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

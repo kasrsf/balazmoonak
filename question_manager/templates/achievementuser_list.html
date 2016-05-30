@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="panel panel-primary col-xs-6 col-xs-offset-3">
+        <div class="panel-heading"><h4 class="text-center"><strong>دستاوردها<strong></h4></div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>زمان</th>
+                    <th>نام کاربری</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for achieve in achievement_list %}
+                    <tr>
+                        <td>{{ achieve.created_at }}</td>
+                        <td>{{ achieve.user.email }}</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

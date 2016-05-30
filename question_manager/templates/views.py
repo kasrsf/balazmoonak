@@ -57,8 +57,7 @@ class AchievementUserListView(generic.ListView):
     template_name = 'achievementuser_list.html'
     context_object_name = 'achievement_list'
     def get_queryset(self):
-        achievement_id = self.kwargs.get('achievement_id', None)
-        return AchievementUser.objects.filter(achievement_id = achievement_id)
+        return AchievementUser.objects.all()
 
 
 class AchievementListView(generic.ListView):

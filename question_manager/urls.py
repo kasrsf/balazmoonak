@@ -9,6 +9,8 @@ add_questions_urls = [
     url(r'^$', login_required(QuizCategorySelectView.as_view()), name='category-list'),
 ]
 
+
+
 single_player_quiz_urls = [
     url(r'^(?P<category_id>[0-9]+)/$', login_required(QuizView.as_view()), name='quiz-view'),
     url(r'^(?P<category_id>[0-9]+)/questions.json', views.questions, name='questions'),
@@ -42,6 +44,10 @@ leaderboard_urls = [
     url(r'^(?P<category_id>[0-9]+)/$', login_required(LeaderboardView.as_view()), name='leaderboard-view'),
 ]
 
+achievement_urls = [
+    url(r'^$', login_required(AchievementListView.as_view()), name='achievement_list'),
+    url(r'^(?P<achievement_id>[0-9]+)/$', login_required(AchievementUserListView.as_view()), name='achievement-view'),
+]
 urlpatterns = [
 	url(r'^addquestions/', include(add_questions_urls)),
     url(r'^spquiz/', include(single_player_quiz_urls)),
@@ -52,4 +58,7 @@ urlpatterns = [
     url(r'^$', IndexView.as_view(), name = 'index'),
     url(r'^question/', views.question_add),
     url(r'^category/', views.category),
+    url(r'^achievements/', include(achievement_urls))
+
+
 ]
