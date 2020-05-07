@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'hccvy9%8(m7@(!uk8n1rwr$3e0&+%*b%bnvgzhjohvkrg_bz3x'
+# SECRET_KEY = 'SECRET_KEY'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -260,7 +260,7 @@ ACCOUNT_PASSWORD_MIN_LENGTH = 4
 
 ## RECAPTCHA settings
 RECAPTCHA_PUBLIC_KEY = '6LfTDRwTAAAAAO4pl3QLObwIzr2iBa58I0aL0AX6'
-RECAPTCHA_PRIVATE_KEY = '6LfTDRwTAAAAAAJuHvRRxYWP72boKpIiKnUunyEy'
+#RECAPTCHA_PRIVATE_KEY = 'PRIVATE_KEY'
 
 RECAPTCHA_USE_SSL = True
 
